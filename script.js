@@ -95,8 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Valida imagem (se fornecida)
-        if (imageInput.files.length > 0) {
+        // Valida imagem (obrigatória)
+        if (imageInput.files.length === 0) {
+            errors.push('Imagem é obrigatória');
+            highlightError(imageInput);
+            isValid = false;
+        } else {
             const file = imageInput.files[0];
             const maxSize = 5 * 1024 * 1024; // 5MB
             
@@ -131,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: new Date().toISOString()
         };
 
-        // Se há imagem, converte para base64
+        // Coleta a imagem (agora obrigatória)
         if (imageInput.files.length > 0) {
             const file = imageInput.files[0];
             formData.image = {
