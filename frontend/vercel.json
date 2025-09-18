@@ -1,15 +1,19 @@
 {
   "version": 2,
+  "buildCommand": "echo 'No build needed'",
+  "outputDirectory": "frontend/public",
+  "framework": null,
+  "installCommand": "echo 'No install needed'",
   "builds": [
     {
-      "src": "public/**/*",
+      "src": "frontend/public/**/*",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/public/$1"
+      "dest": "/frontend/public/$1"
     }
   ]
 }
