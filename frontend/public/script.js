@@ -352,3 +352,6 @@ document.addEventListener('DOMContentLoaded', function() {
 document.querySelector('.container').style.opacity = '0';
 document.querySelector('.container').style.transform = 'translateY(20px)';
 document.querySelector('.container').style.transition = 'all 0.6s ease';
+
+// Vamos adicionar no frontend/public/script.js
+const API_BASE_URL = 'https://desafiocapsula-do-tempocom-ia-production.up.railway.app';
