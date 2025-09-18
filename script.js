@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Elementos do formulário
     const form = document.getElementById('timeCapsuteForm');
     const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
     const messageInput = document.getElementById('message');
     const datetimeInput = document.getElementById('datetime');
     const imageInput = document.getElementById('image');
@@ -60,8 +61,40 @@ document.addEventListener('DOMContentLoaded', function() {
             errors.push('Nome é obrigatório');
             highlightError(nameInput);
             isValid = false;
+        } else if (nameInput.value.trim().length < 2) {
+            errors.push('Nome deve ter pelo menos 2 caracteres');
+            highlightError(nameInput);
+            isValid = false;
+        } else if (nameInput.value.trim().length > 50) {
+            errors.push('Nome deve ter no máximo 50 caracteres');
+            highlightError(nameInput);
+            isValid = false;
+        } else if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(nameInput.value.trim())) {
+            errors.push('Nome deve conter apenas letras e espaços');
+            highlightError(nameInput);
+            isValid = false;
         } else {
             removeError(nameInput);
+        }
+
+        // Valida e-mail
+        if (!emailInput.value.trim()) {
+            errors.push('E-mail é obrigatório');
+            highlightError(emailInput);
+            isValid = false;
+        } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value.trim())) {
+                errors.push('E-mail deve ter um formato válido');
+                highlightError(emailInput);
+                isValid = false;
+            } else if (emailInput.value.trim().length > 100) {
+                errors.push('E-mail deve ter no máximo 100 caracteres');
+                highlightError(emailInput);
+                isValid = false;
+            } else {
+                removeError(emailInput);
+            }
         }
 
         // Valida mensagem
@@ -71,6 +104,10 @@ document.addEventListener('DOMContentLoaded', function() {
             isValid = false;
         } else if (messageInput.value.trim().length < 10) {
             errors.push('Mensagem deve ter pelo menos 10 caracteres');
+            highlightError(messageInput);
+            isValid = false;
+        } else if (messageInput.value.trim().length > 1000) {
+            errors.push('Mensagem deve ter no máximo 1000 caracteres');
             highlightError(messageInput);
             isValid = false;
         } else {
@@ -85,9 +122,15 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             const selectedDate = new Date(datetimeInput.value);
             const now = new Date();
+            const oneYearFromNow = new Date();
+            oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 10);
             
             if (selectedDate <= now) {
                 errors.push('A data deve ser no futuro');
+                highlightError(datetimeInput);
+                isValid = false;
+            } else if (selectedDate > oneYearFromNow) {
+                errors.push('A data não pode ser superior a 10 anos no futuro');
                 highlightError(datetimeInput);
                 isValid = false;
             } else {
@@ -103,13 +146,19 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             const file = imageInput.files[0];
             const maxSize = 5 * 1024 * 1024; // 5MB
+            const minSize = 1024; // 1KB
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
             
-            if (file.size > maxSize) {
+            if (file.size < minSize) {
+                errors.push('Imagem muito pequena (mínimo 1KB)');
+                highlightError(imageInput);
+                isValid = false;
+            } else if (file.size > maxSize) {
                 errors.push('Imagem deve ter no máximo 5MB');
                 highlightError(imageInput);
                 isValid = false;
-            } else if (!file.type.startsWith('image/')) {
-                errors.push('Arquivo deve ser uma imagem');
+            } else if (!allowedTypes.includes(file.type)) {
+                errors.push('Formato de imagem não suportado (use: JPEG, PNG, GIF ou WebP)');
                 highlightError(imageInput);
                 isValid = false;
             } else {
@@ -129,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function collectFormData() {
         const formData = {
             name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
             message: messageInput.value.trim(),
             datetime: datetimeInput.value,
             image: null,
@@ -155,13 +205,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (file) {
             // Valida o arquivo
-            if (!file.type.startsWith('image/')) {
-                alert('Por favor, selecione apenas arquivos de imagem.');
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('Por favor, selecione apenas imagens nos formatos: JPEG, PNG, GIF ou WebP.');
                 e.target.value = '';
                 return;
             }
 
             const maxSize = 5 * 1024 * 1024; // 5MB
+            const minSize = 1024; // 1KB
+            
+            if (file.size < minSize) {
+                alert('A imagem é muito pequena. Tamanho mínimo: 1KB.');
+                e.target.value = '';
+                return;
+            }
+            
             if (file.size > maxSize) {
                 alert('A imagem deve ter no máximo 5MB.');
                 e.target.value = '';
