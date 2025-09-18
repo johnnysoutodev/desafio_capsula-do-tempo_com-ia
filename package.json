@@ -1,0 +1,39 @@
+{
+  "name": "desafio_capsula-do-tempo_com-ia",
+  "version": "1.0.0",
+  "description": "Sistema de uma capsula do tempo, sendo um back-end em node.js, uma api com endpoints para o front-end consumir, na pagina o usuário precisa pode enviar uma mensagem para o futuro informando uma a data e hora que gostaria de receber essa mensagem e com uma imagem.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:frontend": "npx vercel --prod",
+    "deploy:preview": "npx vercel",
+    "dev:frontend": "npx vercel dev",
+    "security:audit": "npm audit",
+    "security:fix": "npm audit fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnnysoutodev/desafio_capsula-do-tempo_com-ia.git"
+  },
+  "keywords": [
+    "capsula-tempo",
+    "time-capsule",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/johnnysoutodev/desafio_capsula-do-tempo_com-ia/issues"
+  },
+  "homepage": "https://github.com/johnnysoutodev/desafio_capsula-do-tempo_com-ia#readme",
+  "overrides": {
+    "esbuild": ">=0.24.3",
+    "path-to-regexp": ">=6.3.0",
+    "undici": ">=5.28.6"
+  },
+  "devDependencies": {
+    "vercel": "^48.0.2"
+  }
+}
