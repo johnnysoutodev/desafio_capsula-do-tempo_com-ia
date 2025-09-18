@@ -2,14 +2,19 @@
   "name": "desafio_capsula-do-tempo_com-ia",
   "version": "1.0.0",
   "description": "Sistema de uma capsula do tempo, sendo um back-end em node.js, uma api com endpoints para o front-end consumir, na pagina o usuário precisa pode enviar uma mensagem para o futuro informando uma a data e hora que gostaria de receber essa mensagem e com uma imagem.",
-  "main": "index.js",
+  "main": "backend/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy:frontend": "npx vercel --prod",
     "deploy:preview": "npx vercel",
     "dev:frontend": "npx vercel dev",
+    "start": "node backend/src/app.js",
+    "dev:backend": "node --watch backend/src/app.js",
+    "migrate": "node backend/src/database/migrate.js",
+    "scheduler": "node backend/cron/scheduler.js",
     "security:audit": "npm audit",
-    "security:fix": "npm audit fix"
+    "security:fix": "npm audit fix",
+    "install:all": "npm install"
   },
   "repository": {
     "type": "git",
@@ -17,7 +22,7 @@
   },
   "keywords": [
     "capsula-tempo",
-    "time-capsule",
+    "time-capsule", 
     "nodejs",
     "javascript"
   ],
@@ -35,5 +40,14 @@
   },
   "devDependencies": {
     "vercel": "^48.0.2"
+  },
+  "dependencies": {
+    "multer": "^1.4.5",
+    "nodemailer": "^6.9.1", 
+    "node-cron": "^3.0.2",
+    "pg": "^8.11.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
