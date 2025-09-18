@@ -91,6 +91,23 @@ textarea {
     font-family: inherit;
 }
 
+.char-counter {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 5px;
+    transition: color 0.3s ease;
+}
+
+.char-counter.warning {
+    color: #f39c12;
+}
+
+.char-counter.danger {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
 input[type="file"] {
     padding: 10px;
     border: 2px dashed #ccc;

@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
     const messageInput = document.getElementById('message');
+    const charCount = document.getElementById('charCount');
     const datetimeInput = document.getElementById('datetime');
     const imageInput = document.getElementById('image');
     const imagePreview = document.getElementById('imagePreview');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     form.addEventListener('submit', handleFormSubmit);
     imageInput.addEventListener('change', handleImageUpload);
+    messageInput.addEventListener('input', updateCharCounter);
     clearFormBtn.addEventListener('click', clearForm);
 
     // Define a data e hora mínima como o momento atual
@@ -49,6 +51,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Simula o salvamento (por enquanto só mostra mensagem de sucesso)
         saveTimeCapsule(formData);
+    }
+
+    // Atualiza o contador de caracteres da mensagem
+    function updateCharCounter() {
+        const currentLength = messageInput.value.length;
+        const maxLength = 140;
+        const counter = document.querySelector('.char-counter');
+        
+        charCount.textContent = currentLength;
+        
+        // Remove classes anteriores
+        counter.classList.remove('warning', 'danger');
+        
+        // Adiciona classes baseadas na contagem
+        if (currentLength > maxLength) {
+            counter.classList.add('danger');
+        } else if (currentLength > maxLength * 0.8) { // 80% do limite (112 chars)
+            counter.classList.add('warning');
+        }
     }
 
     // Valida todos os campos do formulário
@@ -106,8 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
             errors.push('Mensagem deve ter pelo menos 10 caracteres');
             highlightError(messageInput);
             isValid = false;
-        } else if (messageInput.value.trim().length > 1000) {
-            errors.push('Mensagem deve ter no máximo 1000 caracteres');
+        } else if (messageInput.value.trim().length > 140) {
+            errors.push('Mensagem deve ter no máximo 140 caracteres (como no início do Twitter!)');
             highlightError(messageInput);
             isValid = false;
         } else {
@@ -287,6 +308,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirm('Tem certeza que deseja limpar todos os campos?')) {
             form.reset();
             clearImagePreview();
+            updateCharCounter(); // Reseta o contador
             successMessage.classList.add('hidden');
             form.style.display = 'flex';
             removeAllErrors();
@@ -321,6 +343,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.container').style.opacity = '1';
         document.querySelector('.container').style.transform = 'translateY(0)';
     }, 100);
+
+    // Inicializa o contador de caracteres
+    updateCharCounter();
 });
 
 // Estilos dinâmicos para animação inicial
