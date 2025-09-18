@@ -137,3 +137,9 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Vercel
+.vercel/
+frontend/.vercel
+*.log
+.env*.local
