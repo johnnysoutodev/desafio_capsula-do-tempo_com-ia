@@ -143,3 +143,4 @@ vite.config.ts.timestamp-*
 frontend/.vercel
 *.log
 .env*.local
+.vercel
