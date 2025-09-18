@@ -10,3 +10,8 @@
 
 [env]
   NODE_ENV = "production"
+
+# Configurações adicionais para Railway
+[settings]
+  autoDeploy = true
+  branches = ["main"]
